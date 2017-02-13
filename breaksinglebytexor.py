@@ -69,17 +69,19 @@ def score(s):
     return score
 
 #List all possible results
-def breakSingleByteXor(s):
+def breakSingle(s):
     ciphertext = []
     for k in range(0, 127):
         xoredtext = xorsamelength.xorBytes(s, bytes([k]))
         ciphertext.append((xoredtext, chr(k), score(xoredtext)))
     def getKey(s):
         return s[-1]
-    return sorted(ciphertext, key=getKey)
+    ciphertext = sorted(ciphertext, key=getKey)
+    s = ciphertext[-1][0]
+    return s
 
 crypt = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
 
-ciphertext = breakSingleByteXor(binascii.unhexlify(crypt))
+#ciphertext = breakSingleByteXor(binascii.unhexlify(crypt))
 
-print(ciphertext[-1][0])
+print(breakSingle(binascii.unhexlify(crypt)))
