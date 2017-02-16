@@ -16,9 +16,6 @@ print(crypt)
 def hammingDist(c, r):
     return sum([bin(a ^ b).count('1') for a, b in zip(c, r)])
 
-def chop(l, n):
-    return [l[i:i+n] for i in range(0, len(l), n)]
-
 def normalHam(s, k):
     samp1 = s[:k]
     samp2 = s[k:2*k]
@@ -34,12 +31,11 @@ def breakAny(s):
         return s[-1]
     keylist = sorted(keylist, key=getKey)
     keylength = keylist[0][0]
-    parts = chop(s, keylength)
-    print(parts)
+    keyparts = [s[i:i+keylength] for i in range(0, len(s), keylength)]
+    print(keyparts)
     segments = []
-    for i in range(keylength):
-        segments.append(b''.join([part[i] for part in parts]))
-    print(segments)
+    for item in keyparts:
+        segments.append(b''.join([item[i] for i in item]))
     return
 
 breakAny(crypt)
